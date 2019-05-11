@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toolbar;
 
 import com.google.android.gms.common.internal.service.Common;
@@ -17,6 +18,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -25,6 +27,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
+import ucoc.weatherapp.Adapters.ViewPagerAdapter;
 import ucoc.weatherapp.Util.Util;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
                         if (report.areAllPermissionsGranted()) {
                             buildLocationRequest();
                             buildLocationCallBack();
-                            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) 
-                                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(),
+                            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this,
                                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                                 return;
                             }
+                            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
                             fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback
                                     , Looper.myLooper());
                         }
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        Snackbar.make(coordinatorLayout."Permission Denied",Snackbar.LENGTH_LONG);
+                        Snackbar.make(coordinatorLayout,"Permission Denied",Snackbar.LENGTH_LONG);
                     }
                 }).check();
 
@@ -94,12 +98,19 @@ public class MainActivity extends AppCompatActivity {
                 setupViewPager(viewPager);
                 tabLayout =findViewById(R.id.tabs);
                 tabLayout.setupWithViewPager(viewPager);
+
+                Log.d(TAG, "onLocationResult:"+locationResult.getLastLocation().getLatitude());
             }
         };
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        Log.d(TAG, "setupViewPager: Start");
+        ViewPagerAdapter adapter= new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(TodayWeatherFragment.getInstance(),"Today");
+        viewPager.setAdapter(adapter);
+
     }
 
     private void buildLocationRequest() {
