@@ -11,7 +11,7 @@ public class Util {
 
     public static String convertUnixToDate(long dt){
         Date date = new Date(dt*1000L);
-        SimpleDateFormat sdf= new SimpleDateFormat("HH:mm EEE mm yyyy");
+        SimpleDateFormat sdf= new SimpleDateFormat("HH:mm dd EEE mm yyyy");
         String formated=sdf.format(date);
 
         return formated;

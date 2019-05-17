@@ -2,8 +2,8 @@ package ucoc.weatherapp.Models;
 
 public class Main {
     private double temp;
-    private double pressure;
-    private int humidity;
+    private float pressure;
+    private float humidity;
     private double temp_min;
     private double temp_max;
     private double sea_level;
@@ -24,11 +24,11 @@ public class Main {
         return pressure;
     }
 
-    public void setPressure(double pressure) {
+    public void setPressure(float pressure) {
         this.pressure = pressure;
     }
 
-    public int getHumidity() {
+    public float getHumidity() {
         return humidity;
     }
 
