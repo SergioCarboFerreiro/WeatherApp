@@ -100,5 +100,16 @@ public class ForecastFragment extends Fragment {
         recycler_forecast.setAdapter(adapter);
 
     }
+    @Override
+    public void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
 
 }

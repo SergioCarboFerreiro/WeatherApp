@@ -38,6 +38,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //CarView
+    //CardView
     implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
+    //SearchBar and asynctask
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
+    implementation 'com.label305:asynctask:1.0.0'
 }
